@@ -33,6 +33,10 @@ spec:
                 name: "{{ .Values.name }}-config"
             - secretRef:
                 name: "{{ .Values.name }}-secret"
+          {{- if .Values.secret.enabled }}
+            - secretRef:
+                name: "{{ .Values.name }}-secret"
+          {{- end }}
           startupProbe:
             httpGet:
               path: /startup
