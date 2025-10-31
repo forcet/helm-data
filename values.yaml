@@ -10,6 +10,10 @@ namespace: forcet22-dev
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 2
 
+ingress:
+  enable: true
+  appRelated: forcet-lucky-node-app
+
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.
@@ -72,7 +76,8 @@ configMap:
   newAService: "http://forcet-lucky-service.forcet22-dev.svc.cluster.local:4000/lucky"
 
 secret:
-  password: "hola"
+  enable: true
+  password: Zm9yY2V0
 
 
 
