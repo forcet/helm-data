@@ -38,8 +38,7 @@ jobs:
       - name: Deploy files
         run: |
           sed -i "s|{{ version }}|${{ github.run_number }}|g" Chart.yaml
-          helm lint .
-          helm dependency build .
           cat Chart.yaml
           PKG_FILE=$(helm package . | awk '{print $NF}')
+          echo "$PKG_FILE"
           helm push "$PKG_FILE" oci://registry-1.docker.io/${DOCKERHUB_USERNAME}/charts
