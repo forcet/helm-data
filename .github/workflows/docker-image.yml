@@ -41,4 +41,4 @@ jobs:
           cat Chart.yaml
           PKG_FILE=$(helm package . | awk '{print $NF}')
           echo "$PKG_FILE"
-          helm push "$PKG_FILE" oci://registry-1.docker.io/${{secrets.DOCKER_USERNAME}}/charts
+          helm push "$PKG_FILE" oci://registry-1.docker.io/${{ secrets.DOCKER_USERNAME }}
