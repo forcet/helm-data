@@ -1,0 +1,98 @@
+# Default values for helm-data.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: forcet
+
+# Kubernetes namespace to install into (can be overridden)
+namespace: forcet22-dev
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 2
+
+# This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+# This is to override the chart name.
+nameOverride: ""
+fullnameOverride: ""
+
+# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount: {}
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+# This is for setting Kubernetes Labels to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: ClusterIP
+  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  port: 4000
+  targetPort: 3000
+  protocol: TCP
+
+container:
+  # Full image name without tag (e.g. 'adonispaz9506/hola-mundo-clase567')
+  image: "forcet22/hola-node"
+  tag: "16"
+  port: 3000
+  failureThreshold: 5
+  initialDelaySeconds: 0
+  periodSeconds: 10
+
+resources:
+  request:
+    cpu: "500m"
+    memory: "800Mi"
+  limits:
+    cpu: "1000m"
+    memory: "1500Mi"
+
+hpa:
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 75
+
+configMap:
+  newAService: "http://forcet-lucky-service.forcet22-dev.svc.cluster.local:4000/lucky"
+
+secret:
+  password: "hola"
+
+
+
+
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
